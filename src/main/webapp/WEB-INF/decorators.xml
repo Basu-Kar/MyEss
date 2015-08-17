@@ -1,0 +1,10 @@
+<decorators defaultdir="/WEB-INF/jsp/sitemesh">
+	<decorator name="basetemplate" page="mainLayout.jsp">
+		 <pattern>/*</pattern>
+	</decorator>
+	
+	<decorator name="offTemplate" page="offLayout.jsp">
+		 <pattern>/login.do</pattern>
+		<!--  <pattern>/validateLogin.do</pattern> -->
+	</decorator>
+</decorators>
