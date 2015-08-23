@@ -10,6 +10,7 @@ public class ManageTemplateController {
 	
 	@RequestMapping(value="/showTemplate.do")
 	public ModelAndView showDBTemplate(){
-		return new ModelAndView("/template/database");
+		ModelAndView mv = new ModelAndView("/template/templateList");
+		return mv;
 	}
 }
