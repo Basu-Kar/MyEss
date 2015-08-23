@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+ "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+ "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+  
+ <hibernate-mapping package="">  
+  <class name="com.ksoft.ess.login.vo.LoginVO"  table="user_det">
+    <id name="userId" column="email" ></id>
+    <property name="password" column="password"></property>
+  
+  </class> 
+  
+  <class name="com.ksoft.wpm.common.vo.UserVO"  table="user_det">
+    <id name="userId" column="user_id" ></id>
+    <property name="fName" column="f_name"></property>
+    <property name="lName" column="l_name"></property>
+    <property name="dateOfJoin" column="date_of_join"></property>
+    <property name="questionId" column="qstn_id"></property>
+    <property name="ansText" column="ans_t"></property>
+    <property name="roleId" column="role_id"></property>
+    <property name="emailId" column="email"></property>
+  
+  </class> 
+  
+  <sql-query name="findUserByEmailId">
+  	<return alias="userVO" class="com.ksoft.wpm.common.vo.UserVO"/>
+    <![CDATA[select * from user_det where email= :emailId]]>
+  </sql-query>
+            
+ </hibernate-mapping>
