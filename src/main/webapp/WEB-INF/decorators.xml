@@ -5,6 +5,6 @@
 	
 	<decorator name="offTemplate" page="offLayout.jsp">
 		 <pattern>/login.do</pattern>
-		<!--  <pattern>/validateLogin.do</pattern> -->
+		  <pattern>/validateLogin.do</pattern>
 	</decorator>
 </decorators>

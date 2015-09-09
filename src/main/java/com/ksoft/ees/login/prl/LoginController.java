@@ -1,5 +1,7 @@
 package com.ksoft.ees.login.prl;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,13 +25,14 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/validateLogin.do", method=RequestMethod.POST)
-	public ModelAndView validateLogin(@ModelAttribute("loginVO")LoginVO loginVO, BindingResult result){
+	public ModelAndView validateLogin(HttpServletRequest req, @ModelAttribute("loginVO")LoginVO loginVO, BindingResult result){
 		loginValidator.validate(loginVO, result);
 		ModelAndView mv = null;
 		if(result.hasErrors()){
 			mv = new ModelAndView("login");
 		}else{
-			mv = new ModelAndView("home/home");
+			req.getSession().setAttribute("loggedIn", "Y");
+			mv = new ModelAndView("redirect:/home.do");
 		}
 		return mv;
 	}

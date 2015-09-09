@@ -7,7 +7,7 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<title>Login</title>
+
 </head>
 <body >
 <div class="container">
