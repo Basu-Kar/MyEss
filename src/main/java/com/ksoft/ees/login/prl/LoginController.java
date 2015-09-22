@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ksoft.ees.common.session.ISessionHolder;
 import com.ksoft.ees.login.validator.LoginValidator;
 import com.ksoft.ees.login.vo.LoginVO;
 
@@ -18,6 +19,9 @@ public class LoginController {
 
 	@Autowired
 	private LoginValidator loginValidator;
+	
+	@Autowired
+	private ISessionHolder<String> sessionHolder;
 	
 	@RequestMapping(value="/login.do")
 	public ModelAndView showLoginPage(@ModelAttribute("loginVO")LoginVO loginVO){
@@ -31,7 +35,9 @@ public class LoginController {
 		if(result.hasErrors()){
 			mv = new ModelAndView("login");
 		}else{
-			req.getSession().setAttribute("loggedIn", "Y");
+			System.out.println(sessionHolder);
+			sessionHolder.putValue("loggedIn", "Y");
+			//req.getSession().setAttribute("loggedIn", "Y");
 			mv = new ModelAndView("redirect:/home.do");
 		}
 		return mv;

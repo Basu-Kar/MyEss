@@ -9,6 +9,7 @@
 <script type="text/javascript" src="common/jquery/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="common/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
 
+<script type="text/javascript" src="common/js/ess.js"></script>
 
 </head>
 <body>

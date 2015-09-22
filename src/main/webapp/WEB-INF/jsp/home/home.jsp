@@ -11,7 +11,7 @@
 
   <div class="row">
         <div class="col-sm-20">
-        	<form:form class="form-horizontal" role="form" action="validateLogin.do" commandName="loginVO">  
+        	<form:form class="form-horizontal" role="form" action="" commandName="portfolioVO">  
 			  
 			  <%--  <spring:hasBindErrors name="loginVO">
 				
@@ -32,7 +32,7 @@
 			  <div class="form-group">
 			    <label class="control-label col-sm-2" for="projectName">Search Project:</label>
 			    <div class="col-sm-3">
-			      <form:input class="form-control" placeholder="Project Name" path="loginId"/> 
+			      <form:input class="form-control" placeholder="Project Name" path="portFolioId"/> 
 			     
 			    </div>
 			  </div>
@@ -63,6 +63,7 @@
  <table class="table table-striped">
             <thead>
               <tr>
+              	<th>Portfolio Name</th>
                 <th>Project Id</th>
                 <th>Project Name</th>
                 <th>Technology</th>
@@ -70,19 +71,28 @@
               </tr>
             </thead>
             <tbody>
+           
               <tr>
+              
+               
+                <td>IBP</td>
                 <td>1</td>
-                <td>VMM</td>
+                <td><a href="#" onclick="submitForm('showProjectDetails.do')">VMM</a></td>
                 <td>J2EE</td>
-                
+              
               </tr>
+             
               <tr>
+              
+                <td>IBP</td>
                 <td>2</td>
                 <td>EDI</td>
                 <td>J2EE</td>
                
               </tr>
               <tr>
+             
+                <td>IBP</td>
                 <td>3</td>
                 <td>PSL</td>
                 <td>J2EE</td>
