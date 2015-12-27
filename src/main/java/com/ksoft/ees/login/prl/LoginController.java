@@ -2,6 +2,8 @@ package com.ksoft.ees.login.prl;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,8 +109,9 @@ public class LoginController {
 		else{
 			registrationService.submitSignUp(regVO);
 			mv=new ModelAndView("login");
+			mv.addObject("loginVO", new LoginVO());
 		}
-		return null;
+		return mv;
 		
 	}
 	@RequestMapping(value="/approveuser.do")
@@ -122,5 +125,19 @@ public class LoginController {
 		mv.addObject("userlist",userlist);
 		return mv;
 	
+	}
+	@RequestMapping(value="/declineuser.do")
+
+	public ModelAndView declineUser(HttpServletRequest request) throws AddressException, NumberFormatException, MessagingException
+	{
+		ModelAndView mv=null;
+		mv=new ModelAndView("/home/home");
+		String str=request.getParameter("selecteduserId");
+		loginService.declineUser(Integer.parseInt(str));
+		List<UserVO> userlist=loginService.getPendingApprovalUserList();
+		mv.addObject("userlist",userlist);
+		return mv;
+
+
 	}
 }

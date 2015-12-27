@@ -50,7 +50,7 @@ public class RegistrationService {
 		String toEmail = regVO.getEmailId();
 		String subject = "Registration Status";
 		String emailBody = "Dear "+regVO.getfName()+" "+regVO.getlName()
-				+ "\n\n Your registration has been submitted and its under review now. You will receive another email after approval with password. \n\n "
+				+ "\n\n Your registration has been submitted and its under review now. You will receive another email after review.\n\n "
 				+ "Note. This is an auto generated email, please do not reply. \n\n Thanks & Regards,\nESS Admin \n";
 
 		EmailUtil.sendEmail(toEmail, subject, emailBody);

@@ -48,13 +48,30 @@ public class LoginService {
 		String emailBody = "Dear "+uservo.getfName()+" "+uservo.getlName()
 				+"\n\n You are registered successfully. "
 				+ "\n\n Please find your email Id and Password. \n\n Email Id: "+uservo.getEmailId()+"\n\n Password: "+uservo.getPassword()+"\n\n.Note. This is an auto generated email,"
-						+ "please do not reply. \n\n Thanks & Regards, \n ESS Edmin";
+						+ "please do not reply. \n\nThanks & Regards, \n ESS Edmin";
 		EmailUtil.sendEmail(toEmail, subject, emailBody);
 
     }
+	
+
+	public void declineUser(int userid) throws AddressException, MessagingException {
+		UserVO uservo=loginDAO.getUserDetails(userid);
+
+		loginDAO.declineUser(userid);
+		sendDeclineEmail(uservo);		
 
 		
+	}
+private void sendDeclineEmail(UserVO uservo) throws AddressException, MessagingException {
+		
+		String toEmail = uservo.getEmailId();
+		String subject = "Registration Status";
+		String emailBody = "Dear "+uservo.getfName()+" "+uservo.getlName()
+				+"\n\n Your request has been rejected. \n\n Please call helpdesk number:91-9886323700."
+				+ "\n\nNote. This is an auto generated email,"
+						+ "please do not reply. \n\n Thanks & Regards, \n ESS Edmin";
+		EmailUtil.sendEmail(toEmail, subject, emailBody);
 	
 
-	
+}
 }

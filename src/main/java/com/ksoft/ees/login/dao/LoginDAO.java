@@ -55,5 +55,17 @@ public class LoginDAO {
 
 		return (UserVO)cr.uniqueResult();
 	}
+
+	public void declineUser(int userid) {
+		Session session=HibernateUtil.getHibernateSession();
+	     Transaction t=session.beginTransaction();    
+
+		Query query = session.createQuery("delete UserVO where userId = :p1");
+		query.setParameter("p1", userid);
+		
+		int result = query.executeUpdate();		
+		t.commit();
+	     session.close();
+	}
  
 }
