@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -30,7 +29,7 @@
         
         <div class="modal-body">
           
-          <form:form class="form-horizontal" role="form" action="validateLogin.do" commandName="loginVO">  
+          <form:form id="loginform" class="form-horizontal" role="form" action="validateLogin.do" commandName="loginVO">  
 			  
 			   <spring:hasBindErrors name="loginVO">
 				
@@ -69,7 +68,8 @@
 			  </div> -->
 			  <div class="form-group"> 
 			    <div class="col-sm-offset-2 col-sm-10">
-			      <form:button class="btn btn-lg btn-primary">Submit</form:button>
+			     <form:button class="btn btn-lg btn-primary">Submit</form:button>
+				<form:button class="btn btn-lg btn-primary" onClick="newUserSubmit();">Sign Up</form:button>
 			    </div>
 			  </div>
 		</form:form>
@@ -90,6 +90,9 @@
     $(window).load(function(){
         $('#myModal').modal('show');
     });
+    function newUserSubmit(){
+	document.getElementById("loginform").action="registration.do";
+	document.getElementById("loginform").submit();}
 </script>
 
 </body>

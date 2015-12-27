@@ -1,5 +1,7 @@
 package com.ksoft.ees.login.prl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ksoft.ees.common.service.CommonService;
 import com.ksoft.ees.common.session.ISessionHolder;
+import com.ksoft.ees.common.vo.RoleVO;
+import com.ksoft.ees.common.vo.UserVO;
 import com.ksoft.ees.login.validator.LoginValidator;
 import com.ksoft.ees.login.vo.LoginVO;
+import com.ksoft.ees.registration.service.LoginService;
+import com.ksoft.ees.registration.service.RegistrationService;
+import com.ksoft.ees.registration.validator.RegistrationValidator;
+import com.ksoft.ees.registration.vo.RegistrationVO;
 
 @Controller
 public class LoginController {
@@ -23,6 +32,18 @@ public class LoginController {
 	@Autowired
 	private ISessionHolder<String> sessionHolder;
 	
+	@Autowired 
+	private CommonService commonService;
+	
+	@Autowired
+	private RegistrationValidator registrationValidator;
+	
+	@Autowired
+	private RegistrationService registrationService;
+	
+	@Autowired
+	private LoginService loginService;
+
 	@RequestMapping(value="/login.do")
 	public ModelAndView showLoginPage(@ModelAttribute("loginVO")LoginVO loginVO){
 		return new ModelAndView("login");
@@ -35,17 +56,71 @@ public class LoginController {
 		if(result.hasErrors()){
 			mv = new ModelAndView("login");
 		}else{
+			
+			UserVO userVO=loginService.validateLogin(loginVO);
+			if(userVO==null){
+				mv = new ModelAndView("login");
+
+			}else {
+				mv = new ModelAndView("home/home");
+				System.out.println("Controller..............."+userVO.getRoleId());
+
+				if(userVO.getRoleId()==1){
+					List<UserVO> userlist=loginService.getPendingApprovalUserList();
+					System.out.println("Controller..............."+userlist);
+
+					mv.addObject("userlist",userlist);
+					
+				}else if(userVO.getRoleId()==2){
+					//get projectlist @TODO
+				}
+			}
 			System.out.println(sessionHolder);
 			sessionHolder.putValue("loggedIn", "Y");
-			//req.getSession().setAttribute("loggedIn", "Y");
-			mv = new ModelAndView("redirect:/home.do");
+			  //req.getSessiosn().setAttribute("loggedIn", "Y");
+			//mv = new ModelAndView("redirect:/home.do");
 		}
 		return mv;
 	}
-	
 	/*@RequestMapping(value="/home.do")
 	public ModelAndView showHomePage(){
 		System.out.println("................");
 		return new ModelAndView("home/home");
 	}*/
+	@RequestMapping(value="/registration.do")
+	public ModelAndView displayRegistration(@ModelAttribute("regVO")RegistrationVO regVO){
+		ModelAndView mv=null;
+		List<RoleVO> rolelist=commonService.getRoleList();
+		mv=new ModelAndView("/signup");
+		mv.addObject("rolelist",rolelist); 
+		return mv;
+	
+	}
+	@RequestMapping(value="/submitsignup.do")
+	public ModelAndView submitSignUp(@ModelAttribute("regVO")RegistrationVO regVO,BindingResult result){
+		ModelAndView mv=null;
+		registrationValidator.validate(regVO,result);
+		if(result.hasErrors()){
+			mv=new ModelAndView("/signup");
+
+		}
+		else{
+			registrationService.submitSignUp(regVO);
+			mv=new ModelAndView("login");
+		}
+		return null;
+		
+	}
+	@RequestMapping(value="/approveuser.do")
+	public ModelAndView approveUser(HttpServletRequest request) throws Exception{
+		ModelAndView mv=null;
+		mv=new ModelAndView("/home/home");
+		String str=request.getParameter("selecteduserId");
+		loginService.approveUser(Integer.parseInt(str));
+		List<UserVO> userlist=loginService.getPendingApprovalUserList();
+
+		mv.addObject("userlist",userlist);
+		return mv;
+	
+	}
 }

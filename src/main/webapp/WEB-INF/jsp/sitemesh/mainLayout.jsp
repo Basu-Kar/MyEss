@@ -14,6 +14,7 @@
 </style>
 </head>
 <body>
+<jsp:directive.page isELIgnored="false"/>
 
 
 <jsp:include page="scripts.jsp"/>

@@ -7,11 +7,13 @@
 
 <title>ESS - Home</title>
 </head>
+<jsp:directive.page isELIgnored="false"/>
+
 <body>
 
   <div class="row">
         <div class="col-sm-20">
-        	<form:form class="form-horizontal" role="form" action="" commandName="portfolioVO">  
+        	<form:form id="home" class="form-horizontal" role="form" action="">  
 			  
 			  <%--  <spring:hasBindErrors name="loginVO">
 				
@@ -29,13 +31,13 @@
 			    </spring:hasBindErrors> --%>
 			    
 			  
-			  <div class="form-group">
+			<%--   <div class="form-group">
 			    <label class="control-label col-sm-2" for="projectName">Search Project:</label>
 			    <div class="col-sm-3">
 			      <form:input class="form-control" placeholder="Project Name" path="portFolioId"/> 
 			     
 			    </div>
-			  </div>
+			  </div> --%>
 			 <%--  <div class="form-group">
 			    <label class="control-label col-sm-3" for="password">Search Value:</label>
 			    <div class="col-sm-3"> 
@@ -49,17 +51,58 @@
 			      </div>
 			    </div>
 			  </div> -->
-			  <div class="form-group"> 
+	<%-- 		  <div class="form-group"> 
 			    <div class="col-sm-offset-2 col-sm-3">
 			       <form:button class="btn btn-lg btn-primary">Search</form:button>
 			    </div>
 			  </div>
-		</form:form>
-		
+			  
+			   --%>
+	
+			    <div class="form-group"> 
+			    <div class="col-sm-offset-2 col-sm-6">
+			 
+ <c:if test="${userlist ne null}">        
+ <table class="table table-striped">
+            <thead>
+              <tr>
+              	<th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>User Status</th>
+               
+              </tr>
+            </thead>
+            <tbody>
+           
+            
+             <c:forEach items="${userlist}" var="vo">
+              <tr>
+                <td>${vo.fName}</td>
+                <td>${vo.lName}</td>
+                <td>${vo.emailId}</td>
+                <td>${vo.roleId}</td>
+                <td><a href="#" onClick="approveUser('${vo.userId}')">Approve</a></td>
+				<td><a href="#" onClick="declineUser('${vo.userId}')">Decline</a></td>
+               	
+              </tr>
+              </c:forEach> 
+            
+            </tbody>
+          </table>
+          </c:if>
+          
+			   
+			</div>
+			  </div>
+			 <input type="hidden" name="selecteduserId" id="selecteduserId"/> 
+	</form:form>   
+			
         </div>
         
-   </div>     
-
+   </div>   
+     
+<!-- 
  <table class="table table-striped">
             <thead>
               <tr>
@@ -99,6 +142,21 @@
                
               </tr>
             </tbody>
-          </table>
+          </table>-->
+ 
+ <script type="text/javascript">
+ function approveUser(userId){
+		document.getElementById("selecteduserId").value=userId;
+		document.getElementById("home").action="approveuser.do";
+		document.getElementById("home").submit();
+
+		 }
+ function declineUser(userId){
+		document.getElementById("selecteduserId").value=userId;
+		document.getElementById("home").action="declineuser.do";
+		document.getElementById("home").submit();
+
+		}
+ </script>       
 </body>
 </html>

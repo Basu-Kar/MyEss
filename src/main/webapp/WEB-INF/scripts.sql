@@ -31,6 +31,39 @@ CODE_VAL_DESC VARCHAR(50),
 FOREIGN KEY (CODE_CATG_I) REFERENCES CODE_CATG(CODE_CATG_I)
 );
 
+CREATE TABLE ESS.USER_DET(USER_ID INTEGER AUTO_INCREMENT PRIMARY KEY,F_NAME VARCHAR(50),
+L_NAME VARCHAR(50),EMAIL_ID VARCHAR(50),PASSWORD VARCHAR(50), ROLE_ID INTEGER, 
+USER_STAT_ID INTEGER);
+
+CREATE TABLE ESS.USER_ROLE(ROLE_ID INTEGER AUTO_INCREMENT PRIMARY KEY,ROLE_NAME VARCHAR(50),
+ROLE_DESC VARCHAR(50));
+
+CREATE TABLE ESS.USER_STATUS(USER_STAT_ID INTEGER AUTO_INCREMENT PRIMARY KEY,
+STAT_NAME VARCHAR(50), STAT_DESC VARCHAR(50));
+
+
+insert into USER_ROLE(ROLE_NAME,ROLE_DESC) values('ESS_ADMIN_USER','Admin User');
+insert into USER_ROLE(ROLE_NAME,ROLE_DESC) values('ESS_UPDATE_USER','Update User');
+insert into USER_ROLE(ROLE_NAME,ROLE_DESC) values('ESS_READONLY_USER','Read only User');
+
+insert into USER_STATUS(STAT_NAME,STAT_DESC) values('Requested','New user request submitted');
+insert into USER_STATUS(STAT_NAME,STAT_DESC) values('Approved','Approved User');
+insert into USER_STATUS(STAT_NAME,STAT_DESC) values('Declined','Declined User');
+
+insert into ESS.USER_DET(F_NAME,L_NAME,EMAIL_ID,PASSWORD,ROLE_ID,USER_STAT_ID) values('Admin','Admin','admin@ess.com','admin',1,2);
+
+select * from USER_DET;
+--delete from user_det where user_id!=11;
+--commit;
+select * from USER_ROLE
+select * from USER_STATUS
+
+
+
+
+
+
+
 --start mysqld
 --mysqladmin -u root shutdown
 

@@ -67,11 +67,16 @@
 		<artifactId>sitemesh</artifactId>
 		<version>2.4.2</version>
 	</dependency>
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate</artifactId>
-		<version>3.2.7.ga</version>
-	</dependency>
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-core</artifactId>
+	<version>5.0.6.Final</version>
+</dependency>
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-entitymanager</artifactId>
+	<version>5.0.6.Final</version>
+</dependency>
 
 	<dependency>
 		<groupId>mysql</groupId>
@@ -85,7 +90,17 @@
 		<version>1.1</version>
 	</dependency>
 		
-		
+	<!-- <dependency>
+		<groupId>com.octo.captcha</groupId>
+		<artifactId>jcaptcha</artifactId>
+		<version>1.0</version>
+	</dependency>-->
+	<dependency>
+		<groupId>javax.mail</groupId>
+		<artifactId>mail</artifactId>
+		<version>1.4.7</version>
+	</dependency>
+				
   </dependencies>
 
 </project>
