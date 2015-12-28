@@ -48,6 +48,7 @@ public class LoginController {
 
 	@RequestMapping(value="/login.do")
 	public ModelAndView showLoginPage(@ModelAttribute("loginVO")LoginVO loginVO){
+		System.out.println("Controller called.");
 		return new ModelAndView("login");
 	}
 	
