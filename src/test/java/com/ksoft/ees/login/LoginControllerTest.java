@@ -23,9 +23,7 @@ import com.ksoft.ees.login.prl.LoginController;
 import com.ksoft.ees.login.vo.LoginVO;
 import com.ksoft.ees.test.framework.MVCTest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:ApplicationContext-Test.xml")
-@WebAppConfiguration
+
 public class LoginControllerTest extends MVCTest{
 
 	
