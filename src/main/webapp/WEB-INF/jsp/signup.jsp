@@ -18,6 +18,22 @@
 <div class="container">
 
 	<form:form id="signupform" action="submitsignup.do" method="post" commandName="regVO">
+	<spring:hasBindErrors name="regVO">
+				
+          		<div class="form-group"> 
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <div class="alert alert-danger" role="alert">
+			        <ul> 
+			          <c:forEach var="error" items="${errors.allErrors}">
+			                <li><fmt:message key="${error.code}"/></li>
+			            </c:forEach>
+			    	 </ul>
+			      </div>
+			       
+			    </div>
+			  </div>
+			</spring:hasBindErrors>			     
+	
 	  <div class="form-group">
 	    <label class="control-label col-sm-2" for="fName">First Name:</label>
 	    <div class="col-sm-3">
@@ -35,7 +51,7 @@
 	  <div class="form-group">
 	    <label class="control-label col-sm-2" for="email">Email:</label>
 	    <div class="col-sm-3">
-	      <form:input class="form-control" placeholder="Enter email" path="emailId"/>
+	      <form:input class="form-control" type="email"  placeholder="Enter email" path="emailId"/>
 	    </div>
 	  </div>
 	  <div class="col-sm-12"> </div>

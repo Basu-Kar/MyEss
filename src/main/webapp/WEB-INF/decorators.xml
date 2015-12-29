@@ -5,8 +5,10 @@
 	
 	<decorator name="offTemplate" page="offLayout.jsp">
 		 <pattern>/login.do</pattern>
-		  <pattern>/validateLogin.do</pattern>
-		  		  <pattern>/registration.do</pattern>
+		 <pattern>/validateLogin.do</pattern>
+		 <pattern>/registration.do</pattern>
+		 <pattern>/submitsignup.do</pattern> 		  
+		  		  
 		  
 	</decorator>
 </decorators>

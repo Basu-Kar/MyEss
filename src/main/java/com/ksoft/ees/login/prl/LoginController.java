@@ -32,7 +32,7 @@ public class LoginController {
 	private LoginValidator loginValidator;
 	
 	@Autowired
-	private ISessionHolder<String> sessionHolder;
+	private ISessionHolder<Object> sessionHolder;
 	
 	@Autowired 
 	private CommonService commonService;
@@ -48,7 +48,6 @@ public class LoginController {
 
 	@RequestMapping(value="/login.do")
 	public ModelAndView showLoginPage(@ModelAttribute("loginVO")LoginVO loginVO){
-		System.out.println("Controller called.");
 		return new ModelAndView("login");
 	}
 	
@@ -62,9 +61,15 @@ public class LoginController {
 			
 			UserVO userVO=loginService.validateLogin(loginVO);
 			if(userVO==null){
+				result.rejectValue("loginId", "invalid.user");
+
 				mv = new ModelAndView("login");
 
 			}else {
+				mv = new ModelAndView("redirect:/home.do");
+				sessionHolder.putValue("loggedIn", "Y");
+				sessionHolder.putValue("userVO", userVO);
+				/*
 				mv = new ModelAndView("home/home");
 				System.out.println("Controller..............."+userVO.getRoleId());
 
@@ -75,11 +80,13 @@ public class LoginController {
 					mv.addObject("userlist",userlist);
 					
 				}else if(userVO.getRoleId()==2){
-					//get projectlist @TODO
+					//get projectlist
+					mv = new ModelAndView("home/home");
+					
 				}
-			}
-			System.out.println(sessionHolder);
-			sessionHolder.putValue("loggedIn", "Y");
+*/			}
+			//System.out.println(sessionHolder);
+			
 			  //req.getSessiosn().setAttribute("loggedIn", "Y");
 			//mv = new ModelAndView("redirect:/home.do");
 		}
@@ -104,13 +111,18 @@ public class LoginController {
 		ModelAndView mv=null;
 		registrationValidator.validate(regVO,result);
 		if(result.hasErrors()){
+			
+			List<RoleVO> rolelist=commonService.getRoleList();
 			mv=new ModelAndView("/signup");
-
+			mv.addObject("rolelist",rolelist); 
+			return mv;
 		}
 		else{
 			registrationService.submitSignUp(regVO);
+			
 			mv=new ModelAndView("login");
 			mv.addObject("loginVO", new LoginVO());
+			mv.addObject("msg","Your data has been successfully submitted.");
 		}
 		return mv;
 		

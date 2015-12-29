@@ -31,22 +31,34 @@
           
           <form:form id="loginform" class="form-horizontal" role="form" action="validateLogin.do" commandName="loginVO">  
 			  
-			   <spring:hasBindErrors name="loginVO">
+			   
+			  <spring:hasBindErrors name="loginVO">
 				
           		<div class="form-group"> 
 			    <div class="col-sm-offset-2 col-sm-10">
 			      <div class="alert alert-danger" role="alert">
-			        <ul> <li><label><form:errors path="loginId"/></label></li>
-			        <li><label><form:errors path="password"/></label></li>
-			        
-			        </ul>
+			        <ul> 
+			          <c:forEach var="error" items="${errors.allErrors}">
+			                <li><fmt:message key="${error.code}"/></li>
+			            </c:forEach>
+			    	 </ul>
 			      </div>
 			       
 			    </div>
 			  </div>
-			    </spring:hasBindErrors>
-			    
-			  
+			</spring:hasBindErrors>	  
+				
+			   <c:if test="${msg ne null}">
+			    <div class="form-group"> 
+			    	<div class="col-sm-offset-2 col-sm-10">
+			      		<div class="alert alert-success" role="alert">
+			         	${msg}
+			       		</div>
+			       
+			    	</div>
+			 	 </div>  	
+			    </c:if>
+			      			  
 			  <div class="form-group">
 			    <label class="control-label col-sm-3" for="loginId">Email:</label>
 			    <div class="col-sm-8">
