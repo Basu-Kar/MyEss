@@ -81,7 +81,7 @@
                 <td>${vo.fName}</td>
                 <td>${vo.lName}</td>
                 <td>${vo.emailId}</td>
-                <td>${vo.roleId}</td>
+                <td>${vo.userStatusVO.statusName}</td>
                 <td><a href="#" onClick="approveUser('${vo.userId}')">Approve</a></td>
 				<td><a href="#" onClick="declineUser('${vo.userId}')">Decline</a></td>
                	
