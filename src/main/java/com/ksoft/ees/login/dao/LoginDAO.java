@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import com.ksoft.ees.common.util.HibernateUtil;
+import com.ksoft.ees.common.vo.PaginitionVO;
 import com.ksoft.ees.common.vo.UserVO;
 import com.ksoft.ees.login.vo.LoginVO;
 @Repository
@@ -66,6 +67,27 @@ public class LoginDAO {
 		int result = query.executeUpdate();		
 		t.commit();
 	     session.close();
+	}
+	
+	public int getTotalCountOfPendingUserStatus(){
+		Session session=HibernateUtil.getHibernateSession();
+		Query q = session.createQuery("select count(*) from  UserVO where userstatus=:p1");
+		q.setParameter("p1", 1);
+
+		
+		
+		return ((Long)q.uniqueResult()).intValue();
+	}
+	
+	
+	public List<UserVO> getUserStatusForPage(PaginitionVO paginitionVO){
+		Session session=HibernateUtil.getHibernateSession();
+		Query q = session.createQuery("select count(*) from  UserVO where userstatus=:p1");
+		q.setParameter("p1", 1);
+		q.setFirstResult(paginitionVO.getStartIndex());
+		q.setMaxResults(paginitionVO.getEndIndex());		
+		
+		return q.list();
 	}
  
 }

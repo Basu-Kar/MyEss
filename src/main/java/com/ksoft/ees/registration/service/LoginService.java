@@ -1,21 +1,16 @@
 package com.ksoft.ees.registration.service;
 
 import java.util.List;
-import java.util.Properties;
 
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ksoft.ees.common.util.EmailUtil;
+import com.ksoft.ees.common.vo.PaginitionVO;
 import com.ksoft.ees.common.vo.UserVO;
 import com.ksoft.ees.login.dao.LoginDAO;
 import com.ksoft.ees.login.vo.LoginVO;
@@ -34,7 +29,6 @@ public class LoginService {
 	}
 
 	public void approveUser(int userid) throws AddressException, MessagingException {
-		// TODO Auto-generated method stub
 		String password= EmailUtil.generatePassword();
 		loginDAO.approveUser(userid,password);
 		
@@ -62,16 +56,45 @@ public class LoginService {
 
 		
 	}
-private void sendDeclineEmail(UserVO uservo) throws AddressException, MessagingException {
+	private void sendDeclineEmail(UserVO uservo) throws AddressException, MessagingException {
+			
+			String toEmail = uservo.getEmailId();
+			String subject = "Registration Status";
+			String emailBody = "Dear "+uservo.getfName()+" "+uservo.getlName()
+					+"\n\n Your request has been rejected. \n\n Please call helpdesk number:91-9886323700."
+					+ "\n\nNote. This is an auto generated email,"
+							+ "please do not reply. \n\n Thanks & Regards, \n ESS Edmin";
+			EmailUtil.sendEmail(toEmail, subject, emailBody);
 		
-		String toEmail = uservo.getEmailId();
-		String subject = "Registration Status";
-		String emailBody = "Dear "+uservo.getfName()+" "+uservo.getlName()
-				+"\n\n Your request has been rejected. \n\n Please call helpdesk number:91-9886323700."
-				+ "\n\nNote. This is an auto generated email,"
-						+ "please do not reply. \n\n Thanks & Regards, \n ESS Edmin";
-		EmailUtil.sendEmail(toEmail, subject, emailBody);
 	
+	}
 
-}
+
+	/**
+	 * 
+	 * @param paginitionVO
+	 * @return
+	 */
+	public List<UserVO> getPaginatedApprovedUsers(PaginitionVO paginitionVO){
+		
+		int totalCount = loginDAO.getTotalCountOfPendingUserStatus();
+		paginitionVO.setTotalCount(totalCount);
+		paginate(paginitionVO);
+		
+		return loginDAO.getUserStatusForPage(paginitionVO);
+		
+	}
+
+	
+	/**
+	 * 
+	 * @param paginitionVO
+	 */
+	private void paginate(PaginitionVO paginitionVO){
+		int noOfRecordsPerPage=10;
+		int startIndex=(paginitionVO.getCurrentPage()-1)*noOfRecordsPerPage;
+		int endIndex=noOfRecordsPerPage;
+		paginitionVO.setStartIndex(startIndex);
+		paginitionVO.setEndIndex(endIndex);
+	}
 }
