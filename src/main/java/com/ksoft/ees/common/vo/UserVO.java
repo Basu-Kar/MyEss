@@ -1,10 +1,10 @@
 package com.ksoft.ees.common.vo;
 
 	import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
+//import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
+//import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

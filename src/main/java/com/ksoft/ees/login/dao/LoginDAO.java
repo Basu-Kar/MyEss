@@ -5,23 +5,39 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+
+
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ksoft.ees.common.util.HibernateUtil;
 import com.ksoft.ees.common.vo.PaginitionVO;
 import com.ksoft.ees.common.vo.UserVO;
 import com.ksoft.ees.login.vo.LoginVO;
+
+
 @Repository
-public class LoginDAO {
+public class LoginDAO{
 	
+	private SessionFactory sessionFactory;
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+	
+    @Transactional
 	public UserVO validateLogin(LoginVO loginVO) {
-		Session session=HibernateUtil.getHibernateSession();
+		System.out.println(sessionFactory);
+//		Session session=HibernateUtil.getHibernateSession();
+		Session session = this.sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(UserVO.class);
 		cr.add(Restrictions.eq("emailId", loginVO.getLoginId()));
 		cr.add(Restrictions.eq("password", loginVO.getPassword()));
-
 		return (UserVO)cr.uniqueResult();
 	}
 

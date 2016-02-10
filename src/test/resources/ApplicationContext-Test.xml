@@ -10,7 +10,9 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd ">
  
+ 	
 	 <context:component-scan base-package="com.ksoft.ees.*" />
+	 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 			<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 			<property name="prefix" value="/WEB-INF/jsp/" />
@@ -28,7 +30,41 @@
 		</property>
 		</bean>
 				
-				
-		 
+	<!-- <context:property-placeholder location="classpath:config/persistence-mysql.properties" />
+ 
+   <bean id="sessionFactory"
+    class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+      <property name="dataSource" ref="dataSource" />
+      <property name="packagesToScan" value="org.baeldung.spring.persistence.model" />
+      <property name="hibernateProperties">
+         <props>
+            <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+         </props>
+      </property>
+      <property name="mappingResources">
+            <list>
+                <value>ess_proj_manage.xml</value>
+            </list>
+        </property>
+      
+   </bean>
+ 
+   <bean id="dataSource"
+    class="org.apache.commons.dbcp2.BasicDataSource">
+      <property name="driverClassName" value="${jdbc.driverClassName}" />
+      <property name="url" value="${jdbc.url}" />
+      <property name="username" value="${jdbc.user}" />
+      <property name="password" value="${jdbc.pass}" />
+   </bean>
+ 
+   <bean id="transactionManager"
+    class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+      <property name="sessionFactory" ref="sessionFactory" />
+   </bean>
+ 
+   <bean id="persistenceExceptionTranslationPostProcessor"
+    class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>	
+		  -->
 		<mvc:annotation-driven />
 </beans>
